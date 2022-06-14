@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('real_state_photos', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->string('photo');
+            $table->boolean('in_thumb');
             $table->timestamps();
         });
     }
