@@ -16,8 +16,8 @@ class Category extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function realState(): BelongsToMany
+    public function realState()
     {
-        return $this->belongsToMany(RealState::class);
+        return $this->belongsToMany(RealState::class, 'real_state_categories');
     }
 }
