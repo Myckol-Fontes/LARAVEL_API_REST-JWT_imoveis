@@ -47,8 +47,13 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function real_state(): HasMany
+    public function real_state()
     {
         return $this->hasMany(RealState::class);
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
     }
 }

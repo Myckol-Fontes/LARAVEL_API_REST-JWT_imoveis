@@ -9,6 +9,8 @@ class UserProfile extends Model
 {
     use HasFactory;
 
+    protected $table = 'user_profile';
+
     protected $fillable = [
         'phone', 'mobile_phone', 'about', 'social_networks'
     ];
@@ -17,13 +19,4 @@ class UserProfile extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the user associated with the UserProfile
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function profile()
-    {
-        return $this->hasOne(UserProfile::class);
-    }
 }

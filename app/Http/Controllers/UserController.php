@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserProfile;
 use App\Api\ApiMessages;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -41,10 +43,19 @@ class UserController extends Controller
             return response()->json($message->getMessage(), 401);
         }
 
+        Validator::make($data, [
+            'phone' => 'required',
+            'mobile_phone' => 'required'
+        ]);
+
         try{
 
             $data['password'] = bcrypt($data['password']);
             $user = $this->user->create($data);
+            $user->profile()->create([
+                'phone' => $data['phone'],
+                'mobile_phone' => $data['mobile_phone']
+            ]);
 
             return response()->json([
                 'data' => [
