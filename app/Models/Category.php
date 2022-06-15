@@ -10,4 +10,14 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'slug'];
+
+    /**
+     * The roles that belong to the Category
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function realState(): BelongsToMany
+    {
+        return $this->belongsToMany(RealState::class);
+    }
 }

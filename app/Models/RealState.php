@@ -24,4 +24,14 @@ class RealState extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * The roles that belong to the RealState
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }
