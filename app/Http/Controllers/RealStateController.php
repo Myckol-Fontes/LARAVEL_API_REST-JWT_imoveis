@@ -28,7 +28,7 @@ class RealStateController extends Controller
                 'data' => $realState
             ], 200);
         } catch (\Exception $e){
-            $message = new ApiMessage($e->getMessage());
+            $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -45,8 +45,9 @@ class RealStateController extends Controller
                 ]
             ], 200);
         } catch (\Exception $e){
-            $message = new ApiMessage($e->getMessage());
-            return response()->json($message->getMessage(), 401);        }
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 
     public function update($id, RealStateRequest $request){
@@ -62,8 +63,9 @@ class RealStateController extends Controller
                 ]
             ], 200);
         } catch (\Exception $e){
-            $message = new ApiMessage($e->getMessage());
-            return response()->json($message->getMessage(), 401);        }
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 
     public function destroy($id){
@@ -78,7 +80,8 @@ class RealStateController extends Controller
                 ]
             ], 200);
         } catch (\Exception $e){
-            $message = new ApiMessage($e->getMessage());
-            return response()->json($message->getMessage(), 401);        }
+            $message = new ApiMessages($e->getMessage());
+            return response()->json($message->getMessage(), 401);
+        }
     }
 }

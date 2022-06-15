@@ -36,7 +36,14 @@ class UserController extends Controller
     {
         $data = $request->all();
 
+        if(!$request->has('password') || !$request->get('password')){
+            $message = new ApiMessages('É necessário informar uma senha!');
+            return response()->json($message->getMessage(), 401);
+        }
+
         try{
+
+            $data['password'] = bcrypt($data['password']);
             $user = $this->user->create($data);
 
             return response()->json([
@@ -45,7 +52,7 @@ class UserController extends Controller
                 ]
             ], 200);
         } catch (\Exception $e){
-            $message = new ApiMessage($e->getMessage());
+            $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -65,7 +72,7 @@ class UserController extends Controller
                 'data' => $user
             ], 200);
         } catch (\Exception $e){
-            $message = new ApiMessage($e->getMessage());
+            $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -81,6 +88,12 @@ class UserController extends Controller
     {
         $data = $request->all();
 
+        if($request->has('password') && $request->get('password')){
+            $data['password'] = bcrypt($data['password']);
+        }else{
+            unset($data['password']);
+        }
+
         try{
             $user = $this->user->findOrFail($id);
             $user->update($data);
@@ -91,7 +104,7 @@ class UserController extends Controller
                 ]
             ], 200);
         } catch (\Exception $e){
-            $message = new ApiMessage($e->getMessage());
+            $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }
@@ -114,7 +127,7 @@ class UserController extends Controller
                 ]
             ], 200);
         } catch (\Exception $e){
-            $message = new ApiMessage($e->getMessage());
+            $message = new ApiMessages($e->getMessage());
             return response()->json($message->getMessage(), 401);
         }
     }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RealStateController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +29,9 @@ Route::prefix('v1')->group(function(){
 
     Route::name('users.')->group(function(){
         Route::resource('users', 'App\Http\Controllers\UserController');
+    });
+
+    Route::name('categories.')->group(function(){
+        Route::resource('categories', 'App\Http\Controllers\CategoryController');
     });
 });
