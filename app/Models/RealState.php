@@ -34,4 +34,14 @@ class RealState extends Model
     {
         return $this->belongsToMany(Category::class, 'real_state_categories');
     }
+
+    /**
+     * Get all of the comments for the RealState
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photo()
+    {
+        return $this->hasMany(RealStatePhoto::class);
+    }
 }
