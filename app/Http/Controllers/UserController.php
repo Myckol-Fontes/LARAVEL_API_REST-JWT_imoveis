@@ -46,7 +46,7 @@ class UserController extends Controller
         Validator::make($data, [
             'phone' => 'required',
             'mobile_phone' => 'required'
-        ]);
+        ])->validate();
 
         try{
 
@@ -77,7 +77,8 @@ class UserController extends Controller
     public function show($id)
     {
         try{
-            $user = $this->user->findOrFail($id);
+            $user = $this->user->with('profile')->findOrFail($id);
+            $user->profile->social_networks = unserialize($user->profile->social_networks);
 
             return response()->json([
                 'data' => $user
@@ -108,7 +109,7 @@ class UserController extends Controller
         Validator::make($data, [
             'profile.phone' => 'required',
             'profile.mobile_phone' => 'required'
-        ]);
+        ])->validate();
 
         try{
 
