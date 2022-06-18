@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RealStateController;
+use App\Http\Controllers\RealStatePhotoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 
@@ -34,5 +35,10 @@ Route::prefix('v1')->group(function(){
     Route::name('categories.')->group(function(){
         Route::get('categories/{id}/real-states', [CategoryController::class, 'realState']);
         Route::resource('categories', 'App\Http\Controllers\CategoryController');
+    });
+
+    Route::name('photos.')->prefix('photos')->group(function(){
+        Route::delete('/{id}', [RealStatePhotoController::class, 'remove'])->name('delete');
+        Route::put('/set-thumb/{photoId}/{realStateId}', [RealStatePhotoController::class, 'setThumb'])->name('delete');
     });
 });
