@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Api\ApiMessages;
+use Illuminate\Support\Facades\Validator;
 
 class LoginJwtController extends Controller
 {
     public function login(Request $request){
 
         $credentials = $request->all(['email', 'password']);
+
+        Validator::make($credentials, [
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ])->validate();
 
         if(!$token = auth('api')->attempt($credentials)){
             $message = new ApiMessages('Unauthorized');
