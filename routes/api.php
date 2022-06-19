@@ -7,6 +7,7 @@ use App\Http\Controllers\RealStateController;
 use App\Http\Controllers\RealStatePhotoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LoginJwtController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function(){
+
+    Route::post('login', [LoginJwtController::class, 'login'])->name('login');
+
     Route::name('real_states.')->group(function(){
         Route::resource('real-states', 'App\Http\Controllers\RealStateController');
     });
