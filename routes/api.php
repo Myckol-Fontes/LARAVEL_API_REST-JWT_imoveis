@@ -27,22 +27,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function(){
 
     Route::post('login', [LoginJwtController::class, 'login'])->name('login');
+    Route::get('logout', [LoginJwtController::class, 'logout'])->name('logout');
+    Route::get('refresh', [LoginJwtController::class, 'refresh'])->name('refresh');
 
-    Route::name('real_states.')->group(function(){
-        Route::resource('real-states', 'App\Http\Controllers\RealStateController');
-    });
+    Route::group(['middleware' => ['jwt.auth']], function(){
+        Route::name('real_states.')->group(function(){
+            Route::resource('real-states', 'App\Http\Controllers\RealStateController');
+        });
 
-    Route::name('users.')->group(function(){
-        Route::resource('users', 'App\Http\Controllers\UserController');
-    });
+        Route::name('users.')->group(function(){
+            Route::resource('users', 'App\Http\Controllers\UserController');
+        });
 
-    Route::name('categories.')->group(function(){
-        Route::get('categories/{id}/real-states', [CategoryController::class, 'realState']);
-        Route::resource('categories', 'App\Http\Controllers\CategoryController');
-    });
+        Route::name('categories.')->group(function(){
+            Route::get('categories/{id}/real-states', [CategoryController::class, 'realState']);
+            Route::resource('categories', 'App\Http\Controllers\CategoryController');
+        });
 
-    Route::name('photos.')->prefix('photos')->group(function(){
-        Route::delete('/{id}', [RealStatePhotoController::class, 'remove'])->name('delete');
-        Route::put('/set-thumb/{photoId}/{realStateId}', [RealStatePhotoController::class, 'setThumb'])->name('delete');
+        Route::name('photos.')->prefix('photos')->group(function(){
+            Route::delete('/{id}', [RealStatePhotoController::class, 'remove'])->name('delete');
+            Route::put('/set-thumb/{photoId}/{realStateId}', [RealStatePhotoController::class, 'setThumb'])->name('delete');
+        });
     });
 });
