@@ -13,9 +13,35 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tables_countries_states_cities', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug');
+            $table->string('initials');
             $table->timestamps();
+        });
+
+        Schema::create('states', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedbigInteger('country_id');
+
+            $table->string('name');
+            $table->string('slug');
+            $table->string('initials');
+            $table->timestamps();
+
+            $table->foreign('country_id')->references('id')->on('countries');
+        });
+
+        Schema::create('cities', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedbigInteger('state_id');
+
+            $table->string('name');
+            $table->string('slug');
+            $table->timestamps();
+
+            $table->foreign('state_id')->references('id')->on('states');
         });
     }
 
@@ -26,6 +52,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tables_countries_states_cities');
+        Schema::dropIfExists('cities');
+        Schema::dropIfExists('states');
+        Schema::dropIfExists('countries');
     }
 };
