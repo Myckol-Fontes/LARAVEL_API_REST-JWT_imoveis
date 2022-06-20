@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RealStateController;
+use App\Http\Controllers\RealStateSearchController;
 use App\Http\Controllers\RealStatePhotoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
@@ -29,6 +30,8 @@ Route::prefix('v1')->group(function(){
     Route::post('login', [LoginJwtController::class, 'login'])->name('login');
     Route::get('logout', [LoginJwtController::class, 'logout'])->name('logout');
     Route::get('refresh', [LoginJwtController::class, 'refresh'])->name('refresh');
+
+    Route::get('search', [RealStateSearchController::class, 'index'])->name('search');
 
     Route::group(['middleware' => ['jwt.auth']], function(){
         Route::name('real_states.')->group(function(){

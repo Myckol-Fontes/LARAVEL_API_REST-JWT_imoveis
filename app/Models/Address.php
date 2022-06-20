@@ -9,11 +9,6 @@ class Address extends Model
 {
     use HasFactory;
 
-    /**
-     * Get the user that owns the Address
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function state()
     {
         return $this->belongsTo(State::class);
@@ -22,5 +17,10 @@ class Address extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function real_state()
+    {
+        return $this->hasOne(RealState::class);
     }
 }
